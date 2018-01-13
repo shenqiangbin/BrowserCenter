@@ -3,6 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "readme", "readme", "{B5D035A5-AD2E-4202-A6B9-4E3640161F4E}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\..\浏览器功能实现.rtf = ..\..\..\浏览器功能实现.rtf
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
