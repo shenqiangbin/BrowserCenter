@@ -5,6 +5,10 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChefBrowerDemo01", "ChefBrowerDemo01\ChefBrowerDemo01.csproj", "{F85F87C8-CAFF-4C91-BFCC-5B423EF016E7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "gameReg", "gameReg\gameReg.csproj", "{BAC20656-8FC0-4A26-B2B7-21A6D73FAB10}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{2657AD0D-F065-4DA3-828C-A8FD2F300B8D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,22 @@ Global
 		{F85F87C8-CAFF-4C91-BFCC-5B423EF016E7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F85F87C8-CAFF-4C91-BFCC-5B423EF016E7}.Release|x86.ActiveCfg = Release|x86
 		{F85F87C8-CAFF-4C91-BFCC-5B423EF016E7}.Release|x86.Build.0 = Release|x86
+		{BAC20656-8FC0-4A26-B2B7-21A6D73FAB10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BAC20656-8FC0-4A26-B2B7-21A6D73FAB10}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BAC20656-8FC0-4A26-B2B7-21A6D73FAB10}.Debug|x86.ActiveCfg = Debug|x86
+		{BAC20656-8FC0-4A26-B2B7-21A6D73FAB10}.Debug|x86.Build.0 = Debug|x86
+		{BAC20656-8FC0-4A26-B2B7-21A6D73FAB10}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BAC20656-8FC0-4A26-B2B7-21A6D73FAB10}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BAC20656-8FC0-4A26-B2B7-21A6D73FAB10}.Release|x86.ActiveCfg = Release|x86
+		{BAC20656-8FC0-4A26-B2B7-21A6D73FAB10}.Release|x86.Build.0 = Release|x86
+		{2657AD0D-F065-4DA3-828C-A8FD2F300B8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2657AD0D-F065-4DA3-828C-A8FD2F300B8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2657AD0D-F065-4DA3-828C-A8FD2F300B8D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{2657AD0D-F065-4DA3-828C-A8FD2F300B8D}.Debug|x86.Build.0 = Debug|Any CPU
+		{2657AD0D-F065-4DA3-828C-A8FD2F300B8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2657AD0D-F065-4DA3-828C-A8FD2F300B8D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2657AD0D-F065-4DA3-828C-A8FD2F300B8D}.Release|x86.ActiveCfg = Release|Any CPU
+		{2657AD0D-F065-4DA3-828C-A8FD2F300B8D}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
