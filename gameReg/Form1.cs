@@ -64,13 +64,13 @@ namespace gameReg
             this.randomer = new Random();
             timer.Interval = randomer.Next(15, 25);
             timer.Tick += Timer_Tick;
-            this.timer.Start();
-            CloseOtherWin();
+            this.timer.Start();           
         }
 
         private void Timer_Tick(object sender, EventArgs e)
         {
             ClearCookie();
+            CloseOtherWin();
             timer.Stop();
             this.browser.Load(startPage);
             ShowMsg("load page");
@@ -117,7 +117,7 @@ namespace gameReg
                     string str2 = Guid.NewGuid().ToString().Substring(0, 2);
                     string str3 = Guid.NewGuid().ToString().Substring(0, 2);
 
-                    string username = str2 + randomer.Next(99999 + 1, 999999999);
+                    string username = "qq" + randomer.Next(99999 + 1, 999999999);
                     string pwd = str3 + randomer.Next(99999 + 1, 999999999).ToString();
                     //由于页面判断没能使用Flash，需间隔一下，才展示元素，因此这里也需要延时2秒钟。
                     string str = @"
