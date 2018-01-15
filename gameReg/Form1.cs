@@ -54,7 +54,7 @@ namespace gameReg
 
             this.browser.FrameLoadEnd += Browser_FrameLoadEnd;
             this.browser.LoadingStateChanged += Browser_LoadingStateChanged;
-            this.browser.RenderProcessMessageHandler = new RenderProcessMessageHandler();            
+            this.browser.RenderProcessMessageHandler = new RenderProcessMessageHandler();
             //this.browser.LifeSpanHandler = new MyLifeSpanHandler();
         }
 
@@ -114,8 +114,11 @@ namespace gameReg
 
                 if (e.Frame.IsMain)
                 {
-                    string username = "qq" + randomer.Next(99999 + 1, 999999);
-                    string pwd = username;
+                    string str2 = Guid.NewGuid().ToString().Substring(0, 2);
+                    string str3 = Guid.NewGuid().ToString().Substring(0, 2);
+
+                    string username = str2 + randomer.Next(99999 + 1, 999999999);
+                    string pwd = str3 + randomer.Next(99999 + 1, 999999999).ToString();
                     //由于页面判断没能使用Flash，需间隔一下，才展示元素，因此这里也需要延时2秒钟。
                     string str = @"
                     setTimeout(function() {                        
