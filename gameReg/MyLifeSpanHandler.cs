@@ -11,7 +11,10 @@ namespace gameReg
     {
         public bool DoClose(IWebBrowser browserControl, IBrowser browser)
         {
-            browser.Dispose();
+            if (browser.IsDisposed || browser.IsPopup)
+            {
+                return false;
+            }
             return true;
         }
 
@@ -28,8 +31,8 @@ namespace gameReg
         public bool OnBeforePopup(IWebBrowser browserControl, IBrowser browser, IFrame frame, string targetUrl, string targetFrameName, WindowOpenDisposition targetDisposition, bool userGesture, IPopupFeatures popupFeatures, IWindowInfo windowInfo, IBrowserSettings browserSettings, ref bool noJavascriptAccess, out IWebBrowser newBrowser)
         {
             newBrowser = null;
-            var chromiumWebBrowser = (ChromiumWebBrowser)browserControl;
-            chromiumWebBrowser.Load(targetUrl);
+            //var chromiumWebBrowser = (ChromiumWebBrowser)browserControl;
+            //chromiumWebBrowser.Load(targetUrl);
             return true;
         }
     }

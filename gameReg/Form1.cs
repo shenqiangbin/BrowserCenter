@@ -55,7 +55,7 @@ namespace gameReg
             this.browser.FrameLoadEnd += Browser_FrameLoadEnd;
             this.browser.LoadingStateChanged += Browser_LoadingStateChanged;
             this.browser.RenderProcessMessageHandler = new RenderProcessMessageHandler();
-            //this.browser.LifeSpanHandler = new MyLifeSpanHandler();
+            this.browser.LifeSpanHandler = new MyLifeSpanHandler();
         }
 
         private void InitTimer()
