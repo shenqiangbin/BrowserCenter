@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "gameReg", "gameReg\gameReg.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{2657AD0D-F065-4DA3-828C-A8FD2F300B8D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "gameRegZhangYu", "gameRegZhangYu\gameRegZhangYu.csproj", "{CCF28889-5556-40F8-B3B9-371B434CE797}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +43,14 @@ Global
 		{2657AD0D-F065-4DA3-828C-A8FD2F300B8D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2657AD0D-F065-4DA3-828C-A8FD2F300B8D}.Release|x86.ActiveCfg = Release|Any CPU
 		{2657AD0D-F065-4DA3-828C-A8FD2F300B8D}.Release|x86.Build.0 = Release|Any CPU
+		{CCF28889-5556-40F8-B3B9-371B434CE797}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CCF28889-5556-40F8-B3B9-371B434CE797}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CCF28889-5556-40F8-B3B9-371B434CE797}.Debug|x86.ActiveCfg = Debug|x86
+		{CCF28889-5556-40F8-B3B9-371B434CE797}.Debug|x86.Build.0 = Debug|x86
+		{CCF28889-5556-40F8-B3B9-371B434CE797}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CCF28889-5556-40F8-B3B9-371B434CE797}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CCF28889-5556-40F8-B3B9-371B434CE797}.Release|x86.ActiveCfg = Release|x86
+		{CCF28889-5556-40F8-B3B9-371B434CE797}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
