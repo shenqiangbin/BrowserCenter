@@ -10,7 +10,7 @@ using CefSharp;
 using CefSharp.WinForms;
 using System.IO;
 
-namespace gameReg
+namespace QiangHongBao
 {
     public partial class Form1 : Form
     {
@@ -24,32 +24,51 @@ namespace gameReg
         {
             InitializeComponent();
 
+            this.randomer = new Random();
+
             InitBrowser();
             InitTimer();
 
             DbStore.Init();
+            this.FormClosed += Form1_FormClosed;
+        }
+
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        {
         }
 
         private void InitBrowser()
         {
             CefSettings settings = new CefSettings();
             settings.CefCommandLineArgs.Add("ppapi-flash-path", @"C:\Program Files (x86)\Google\Chrome\Application-\47.0.2526.106\PepperFlash\pepflashplayer.dll"); //Load a specific pepper flash version (Step 1 of 2)
-            //¬∑æ∂–¥¥Ì£¨π “‚»√Flash≤ªø…”√            
+            //Ë∑ØÂæÑÂÜôÈîôÔºåÊïÖÊÑèËÆ©Flash‰∏çÂèØÁî®            
             settings.CefCommandLineArgs.Add("ppapi-flash-version", "20.0.0.228"); //Load a specific pepper flash version (Step 2 of 2)
             //settings.CefCommandLineArgs.Add("no-proxy-server", "1");
-            //settings.CefCommandLineArgs.Add("proxy-server", "http://114.115.140.25:3128");
+            //settings.CefCommandLineArgs.Add("proxy-server", "http://106.42.21.60:32315");
+            string andoridWeiXin = "Mozilla/5.0 (Linux; Android 4.4.4; HM NOTE 1LTEW Build/KTU84P) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/33.0.0.0 Mobile Safari/537.36 MicroMessenger/6.0.0.54_r849063.501 NetType/WIFI";
+            string iphoneWeiXin = "Mozilla/5.0 (iPhone; CPU iPhone OS 8_0 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) Mobile/12A365 MicroMessenger/5.4.1 NetType/WIFI";
+
+            andoridWeiXin = "Mozilla/5.0 (Linux; Android 4.4.4; HM NOTE 2 Build/KTU84P) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/33.0.0.0 Mobile Safari/537.36 NetType/WIFI";
+            iphoneWeiXin = "Mozilla/5.0 (iPhone; CPU iPhone OS 3 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) Mobile/12A365  NetType/WIFI";
+
+            settings.UserAgent = randomer.Next() % 2 == 0 ? andoridWeiXin : iphoneWeiXin;
+            //settings.UserAgent = andoridWeiXin;
             Cef.Initialize(settings);
 
-            startPage = "https://tst.bianxianmao.com/dist/newwheel/show/wheel12325.html?business=money-1&amp;appkey=64745fa3bd8c428ba7896efdc7286334&amp;uid=F91493869105D431788BB09FC728746F&amp;activityid=12325&amp;i=__IMEI__&amp;f=__IDFA__&amp;gettime=1516693345790&amp;from=groupmessage&amp;isappinstalled=0";
-
-            browser = new ChromiumWebBrowser(startPage);
+            //startPage = "http://service.spiritsoft.cn/ua.html";
+            //startPage = "http://tools.likai.cc/browser/";
+            string ipUrl = "http://www.ip138.com/";
+            browser = new ChromiumWebBrowser(ipUrl);
+            //ShowMsg("Âä†ËΩΩÔºö" + startPage);
 
             this.browser.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right | AnchorStyles.Top)));
-            this.browser.Location = new System.Drawing.Point(3, 30);
+
+            this.browser.Location = new System.Drawing.Point(209, 30);
             this.browser.MinimumSize = new System.Drawing.Size(20, 20);
             this.browser.Name = "webBrowser1";
-            this.browser.Size = new System.Drawing.Size(832, 563);
+            this.browser.Size = new System.Drawing.Size(617, 554);
+
             this.browser.TabIndex = 0;
 
             this.Controls.Add(this.browser);
@@ -63,10 +82,9 @@ namespace gameReg
         private void InitTimer()
         {
             this.timer = new Timer();
-            this.randomer = new Random();
-            timer.Interval = randomer.Next(15, 25);
+            timer.Interval = 1000;
             timer.Tick += Timer_Tick;
-            this.timer.Start();           
+            //this.timer.Start();
         }
 
         private void Timer_Tick(object sender, EventArgs e)
@@ -74,20 +92,31 @@ namespace gameReg
             ClearCookie();
             CloseOtherWin();
             timer.Stop();
+
             this.browser.Load(startPage);
-            ShowMsg("load page");
-            timer.Interval = randomer.Next(15, 25) * 1000;
+            //ShowMsg("load page");
+            timer.Interval = randomer.Next(int.Parse(txtIntervalMin.Text), int.Parse(txtIntervalMax.Text)) * 1000;
+            ShowMsg("‰∏ãÊ¨°Èó¥Èöî(Áßí)Ôºö" + timer.Interval / 1000);
             timer.Start();
         }
 
-        //«Â≥˝cookie
+        //Ê∏ÖÈô§cookie
         private void ClearCookie()
         {
             var cookieManager = CefSharp.Cef.GetGlobalCookieManager();
             cookieManager.DeleteCookiesAsync("", "");
+
+            try
+            {
+                browser.GetFocusedFrame().ExecuteJavaScriptAsync("localStorage.clear()");
+            }
+            catch (Exception)
+            {
+
+            }
         }
 
-        //πÿ±’∆‰À˚¥∞ÃÂ
+        //ÂÖ≥Èó≠ÂÖ∂‰ªñÁ™ó‰Ωì
         private void CloseOtherWin()
         {
             foreach (Form win in Application.OpenForms)
@@ -111,38 +140,34 @@ namespace gameReg
         {
             try
             {
-                if (!string.Equals(e.Url, startPage, StringComparison.OrdinalIgnoreCase))
-                    return;
+                ShowMsg(e.Url);
 
-                if (e.Frame.IsMain)
+                //ÂàöËøõÊù•ÁöÑÈ°µÈù¢
+                if (e.Url.Contains(startPage))
                 {
-                    string str2 = Guid.NewGuid().ToString().Substring(0, 2);
-                    string str3 = Guid.NewGuid().ToString().Substring(0, 2);
-
-                    string username = "qq" + randomer.Next(99999 + 1, 999999999);
-                    string pwd = str3 + randomer.Next(99999 + 1, 999999999).ToString();
-                    //”…”⁄“≥√Ê≈–∂œ√ªƒ‹ π”√Flash£¨–Ëº‰∏Ù“ªœ¬£¨≤≈’π æ‘™Àÿ£¨“Ú¥À’‚¿Ô“≤–Ë“™—” ±2√Î÷”°£
-                    string str = @"
-                    setTimeout(function() {                        
-                       document.getElementById('main').click();
-                       $('#login_account').val('@username');
-                       $('#password').val('@pwd');
-                       $('#password1').val('@pwd');
-                       setTimeout(function() {  $('#submitbtn').click(); }, 1000);
-                    }, 2000);
-                ".Replace("@username", username)
-                    .Replace("@pwd", pwd);
-
                     CountNum++;
-                    ShowMsg($"[{CountNum}] registering:{username},{pwd}");
-                    DbStore.Store($"{username},{pwd}");
-                    e.Frame.ExecuteJavaScriptAsync(str);
+                    ShowMsg($"[{CountNum}] reload");
+                    ExecuteJS("document.getElementsByClassName('start')[0].click();", e, 1);
+                    ExecuteJS("document.getElementsByClassName('detail')[0].click();", e, 7);
                 }
             }
             catch (Exception ex)
             {
                 ShowMsg(ex.Message);
             }
+        }
+
+        private void ExecuteJS(string js, FrameLoadEndEventArgs e, int delaySeconds)
+        {
+            string str = js;
+
+            str = @"
+                    setTimeout(function() {                                              
+                       {js}                       
+                    }, {timespan});
+                ".Replace("{js}", js)
+                .Replace("{timespan}", (1000 * delaySeconds).ToString());
+            e.Frame.ExecuteJavaScriptAsync(str);
         }
 
         private void btnGo_Click(object sender, EventArgs e)
@@ -164,7 +189,7 @@ namespace gameReg
                 {
                     if (this.richTextBox1.Text.Length > 2000)
                         this.richTextBox1.Text = "";
-                    this.richTextBox1.Text = $"°æ{DateTime.Now.ToLocalTime()}°ø:{msg}\r\n{this.richTextBox1.Text}";
+                    this.richTextBox1.Text = $"„Äê{DateTime.Now.ToString("HH:mm:ss")}„Äë:{msg}\r\n{this.richTextBox1.Text}";
 
                 }), "");
             }
@@ -172,9 +197,14 @@ namespace gameReg
             {
                 if (this.richTextBox1.Text.Length > 2000)
                     this.richTextBox1.Text = "";
-                this.richTextBox1.Text = $"°æ{DateTime.Now.ToLocalTime()}°ø:{msg}\r\n{this.richTextBox1.Text}";
+                this.richTextBox1.Text = $"„Äê{DateTime.Now.ToString("HH:mm:ss")}„Äë:{msg}\r\n{this.richTextBox1.Text}";
             }
 
+        }
+
+        private void btnStart_Click(object sender, EventArgs e)
+        {
+            timer.Start();
         }
     }
 }
