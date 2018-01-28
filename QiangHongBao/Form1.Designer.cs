@@ -34,6 +34,7 @@ namespace QiangHongBao
             this.txtIntervalMax = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.btnStart = new System.Windows.Forms.Button();
+            this.checkBox_EnableProxy = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // btnShowDev
@@ -50,9 +51,9 @@ namespace QiangHongBao
             // 
             this.richTextBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.richTextBox1.Location = new System.Drawing.Point(2, 51);
+            this.richTextBox1.Location = new System.Drawing.Point(2, 76);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(187, 533);
+            this.richTextBox1.Size = new System.Drawing.Size(213, 508);
             this.richTextBox1.TabIndex = 3;
             this.richTextBox1.Text = "";
             // 
@@ -91,11 +92,22 @@ namespace QiangHongBao
             this.btnStart.UseVisualStyleBackColor = true;
             this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
             // 
+            // checkBox_EnableProxy
+            // 
+            this.checkBox_EnableProxy.AutoSize = true;
+            this.checkBox_EnableProxy.Location = new System.Drawing.Point(2, 54);
+            this.checkBox_EnableProxy.Name = "checkBox_EnableProxy";
+            this.checkBox_EnableProxy.Size = new System.Drawing.Size(132, 16);
+            this.checkBox_EnableProxy.TabIndex = 8;
+            this.checkBox_EnableProxy.Text = "使用内部服务器代理";
+            this.checkBox_EnableProxy.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(838, 596);
+            this.Controls.Add(this.checkBox_EnableProxy);
             this.Controls.Add(this.btnStart);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtIntervalMax);
@@ -116,6 +128,7 @@ namespace QiangHongBao
         private System.Windows.Forms.TextBox txtIntervalMax;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnStart;
+        private System.Windows.Forms.CheckBox checkBox_EnableProxy;
     }
 }
 

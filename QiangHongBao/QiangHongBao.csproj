@@ -76,6 +76,7 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="MyLifeSpanHandler.cs" />
+    <Compile Include="NetHelper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RenderProcessMessageHandler.cs" />

@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using CefSharp;
 using CefSharp.WinForms;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace QiangHongBao
 {
@@ -19,6 +20,9 @@ namespace QiangHongBao
         private Random randomer;
         private int CountNum = 0;
         private string startPage = System.Configuration.ConfigurationManager.AppSettings["startPage"];
+        private int proxyUserNumber = 0;
+        private List<string> urls;
+        private int currentUrlIndex = 0;
 
         public Form1()
         {
@@ -31,6 +35,17 @@ namespace QiangHongBao
 
             DbStore.Init();
             this.FormClosed += Form1_FormClosed;
+
+            GetIP();
+            urls = GetUrls();
+
+            checkBox_EnableProxy.CheckedChanged += CheckBox_EnableProxy_CheckedChanged;
+        }
+
+        private void CheckBox_EnableProxy_CheckedChanged(object sender, EventArgs e)
+        {
+            this.browser.Dispose();
+            InitBrowser();
         }
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
@@ -43,8 +58,14 @@ namespace QiangHongBao
             settings.CefCommandLineArgs.Add("ppapi-flash-path", @"C:\Program Files (x86)\Google\Chrome\Application-\47.0.2526.106\PepperFlash\pepflashplayer.dll"); //Load a specific pepper flash version (Step 1 of 2)
             //路径写错，故意让Flash不可用            
             settings.CefCommandLineArgs.Add("ppapi-flash-version", "20.0.0.228"); //Load a specific pepper flash version (Step 2 of 2)
-            //settings.CefCommandLineArgs.Add("no-proxy-server", "1");
-            //settings.CefCommandLineArgs.Add("proxy-server", "http://106.42.21.60:32315");
+                                                                                  //settings.CefCommandLineArgs.Add("no-proxy-server", "1");
+            if (checkBox_EnableProxy.Checked)
+            {
+                string proxyIP = GetProxyIP();
+                ShowMsg(proxyIP);
+                settings.CefCommandLineArgs.Add("--proxy-server", "http://" + proxyIP);
+            }
+
             string andoridWeiXin = "Mozilla/5.0 (Linux; Android 4.4.4; HM NOTE 1LTEW Build/KTU84P) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/33.0.0.0 Mobile Safari/537.36 MicroMessenger/6.0.0.54_r849063.501 NetType/WIFI";
             string iphoneWeiXin = "Mozilla/5.0 (iPhone; CPU iPhone OS 8_0 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) Mobile/12A365 MicroMessenger/5.4.1 NetType/WIFI";
 
@@ -53,11 +74,11 @@ namespace QiangHongBao
 
             settings.UserAgent = randomer.Next() % 2 == 0 ? andoridWeiXin : iphoneWeiXin;
             //settings.UserAgent = andoridWeiXin;
-            Cef.Initialize(settings);
+            Cef.Initialize(settings);            
 
             //startPage = "http://service.spiritsoft.cn/ua.html";
             //startPage = "http://tools.likai.cc/browser/";
-            string ipUrl = "http://www.ip138.com/";
+            string ipUrl = "http://2017.ip138.com/ic.asp";
             browser = new ChromiumWebBrowser(ipUrl);
             //ShowMsg("加载：" + startPage);
 
@@ -93,7 +114,30 @@ namespace QiangHongBao
             CloseOtherWin();
             timer.Stop();
 
+            if (currentUrlIndex == urls.Count)
+            {
+                ShowMsg("url用完");
+                return;
+            }
+
+            startPage = urls[currentUrlIndex];
+
+            if (proxyUserNumber == 0 && currentUrlIndex == 0)
+                ShowMsg("使用url：" + startPage);
+
             this.browser.Load(startPage);
+            proxyUserNumber++;
+            if (proxyUserNumber == 9)
+            {
+                proxyUserNumber = 0;
+                currentUrlIndex++;
+                ShowMsg("使用url：" + startPage);
+                if (checkBox_EnableProxy.Checked)
+                {
+                    this.browser.Dispose();
+                    InitBrowser();
+                }
+            }
             //ShowMsg("load page");
             timer.Interval = randomer.Next(int.Parse(txtIntervalMin.Text), int.Parse(txtIntervalMax.Text)) * 1000;
             ShowMsg("下次间隔(秒)：" + timer.Interval / 1000);
@@ -140,7 +184,7 @@ namespace QiangHongBao
         {
             try
             {
-                ShowMsg(e.Url);
+                //ShowMsg(e.Url);
 
                 //刚进来的页面
                 if (e.Url.Contains(startPage))
@@ -205,6 +249,57 @@ namespace QiangHongBao
         private void btnStart_Click(object sender, EventArgs e)
         {
             timer.Start();
+        }
+
+        private void GetIP()
+        {
+            //var result = NetHelper.Get("http://2017.ip138.com/ic.asp");
+            //if (result.Success)
+            //{
+            //    var RegexStr = "<center>(.*)</center>";
+            //    if (Regex.IsMatch(result.Content, RegexStr))
+            //    {
+            //        Match match = Regex.Match(result.Content, RegexStr);
+            //        var str = match.Value;
+            //        if (str != null)
+            //            str = str.Replace("<center>", "").Replace("</center>", "");
+
+            //        txtIP.Text = str;
+            //    }
+            //    else
+            //    {
+            //        txtIP.Text = "没有匹配到ip信息";
+            //    }
+            //}
+            //else
+            //{
+            //    txtIP.Text = result.Content;
+            //}
+        }
+
+        private string GetProxyIP()
+        {
+
+            var result = NetHelper.Get("http://tvp.daxiangdaili.com/ip/?tid=558067251645416&num=1&delay=2");
+            if (result.Success)
+                return result.Content;
+            else
+                return "";
+        }
+
+        private List<string> GetUrls()
+        {
+            List<string> list = new List<string>();
+
+            using (StreamReader reader = new StreamReader("urls.txt"))
+            {
+                while (!reader.EndOfStream)
+                {
+                    list.Add(reader.ReadLine());
+                }
+            }
+
+            return list;
         }
     }
 }
