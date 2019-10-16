@@ -35,3 +35,7 @@ this.Controls.Add(this.browser);
 加载某个地址：
 this.browser.Load(url);
 
+
+window.open 问题参照:
+https://blog.csdn.net/lanwilliam/article/details/79640954
+
